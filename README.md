@@ -27,7 +27,7 @@ module "dns-mikemackintosh-com" {
 
 You can then extend the DNS output for other resources, such as droplets:
 
-```
+```tf
 resource digitalocean_record "www" {
   domain = module.dns-mikemackintosh-com.name
   name = "www"
