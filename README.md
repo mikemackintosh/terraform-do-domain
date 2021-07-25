@@ -16,7 +16,7 @@ module "dns-mikemackintosh-com" {
 
   dkim = {
     selector = "google"
-    pubkey   = "v=DKIM1; k=rsa; p=MI........
+    pubkey   = "v=DKIM1; k=rsa; p=MI........"
   }
 
   tags = {
