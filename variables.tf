@@ -49,8 +49,8 @@ variable "dkim" {
   })
 
   validation {
-    condition     = length(var.dkim.pubkey) != 0 || substr(var.dkim.pubkey, 0, 6) != "k=rsa;"
-    error_message = "The dkim value must be a valid record value, starting with \"k=rsa;\"."
+    condition     = length(var.dkim.pubkey) != 0 && substr(var.dkim.pubkey, 0, 8) != "v=DKIM1;"
+    error_message = "The dkim value must be a valid record value, starting with \"v=DKIM1;\"."
   }
 }
 
