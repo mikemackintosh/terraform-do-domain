@@ -43,11 +43,7 @@ variable "dmarc" {
 }
 
 variable "dkim" {
-  type = list(object({
-    selector = string
-    pubkey   = string
-    type     = string
-  }))
+  type = map
 
   validation {
     condition = length([
