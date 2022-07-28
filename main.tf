@@ -28,11 +28,11 @@ resource "digitalocean_record" "spf" {
 }
 
 resource "digitalocean_record" "dkim" {
-  domain = digitalocean_domain.default.name
-  type   = "TXT"
-  name   = "${var.dkim.selector}._domainkey"
-  value  = var.dkim.pubkey
-  count  = length(var.dkim.pubkey) > 0 ? 1 : 0
+  for_each = var.dkim
+  domain   = digitalocean_domain.default.name
+  type     = "TXT"
+  name     = "${each.selector}._domainkey"
+  value    = each.pubkey
 }
 
 resource "digitalocean_record" "dmarc" {
