@@ -30,9 +30,9 @@ resource "digitalocean_record" "spf" {
 resource "digitalocean_record" "dkim" {
   for_each = var.dkim
   domain   = digitalocean_domain.default.name
-  type     = "TXT"
-  name     = "${each.selector}._domainkey"
-  value    = each.pubkey
+  type     = each.value.type
+  name     = "${each.value.selector}._domainkey"
+  value    = each.value.pubkey
 }
 
 resource "digitalocean_record" "dmarc" {
