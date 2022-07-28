@@ -28,10 +28,10 @@ resource "digitalocean_record" "spf" {
 }
 
 resource "digitalocean_record" "dkim" {
-  for_each = toset(var.dkim)
+  for_each = var.dkim
   domain   = digitalocean_domain.default.name
   type     = each.value.type
-  name     = "${each.value.selector}._domainkey"
+  name     = "${each.key}._domainkey"
   value    = each.value.pubkey
 }
 
