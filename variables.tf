@@ -46,12 +46,14 @@ variable "dkim" {
   type = list(object({
     selector = string
     pubkey   = string
+    type     = string
   }))
 
   validation {
     condition = length([
       for o in var.dkim : true
-      if length(o.pubkey) != 0 || substr(o.pubkey, 0, 8) != "v=DKIM1;"
+      if length(o.pubkey) != 0 || substr(o.pubkey, 0, 8) != "v=DKIM1;" || (o.type != "CNAME" && o.type != "TXT")
+
     ]) == length(var.dkim)
     error_message = "The dkim value must be a valid record value, starting with \"v=DKIM1;\"."
   }
