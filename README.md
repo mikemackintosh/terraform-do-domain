@@ -14,10 +14,10 @@ module "dns-mikemackintosh-com" {
     "google-site-verification=wzH......."
   ]
 
-  dkim = {
+  dkim = [{
     selector = "google"
     pubkey   = "v=DKIM1; k=rsa; p=MI........"
-  }
+  }]
 
   tags = {
     Environment = "mm"
