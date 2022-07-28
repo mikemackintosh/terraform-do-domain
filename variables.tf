@@ -43,13 +43,16 @@ variable "dmarc" {
 }
 
 variable "dkim" {
-  type = object({
+  type = list(object({
     selector = string
     pubkey   = string
   })
 
   validation {
-    condition     = length(var.dkim.pubkey) != 0 || substr(var.dkim.pubkey, 0, 8) != "v=DKIM1;"
+    condition     = length([
+      for o in var.dkim : true
+      if length(var.dkim.pubkey) != 0 || substr(var.dkim.pubkey, 0, 8) != "v=DKIM1;"
+    ]) == length(var.dkim)
     error_message = "The dkim value must be a valid record value, starting with \"v=DKIM1;\"."
   }
 }
