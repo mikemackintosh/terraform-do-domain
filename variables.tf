@@ -17,7 +17,7 @@ variable "gmail_mx" {
 
 variable "txt" {
   description = "TXT records"
-  type        = list
+  type        = list(any)
   default     = []
 }
 
@@ -46,10 +46,10 @@ variable "dkim" {
   type = list(object({
     selector = string
     pubkey   = string
-  })
+  }))
 
   validation {
-    condition     = length([
+    condition = length([
       for o in var.dkim : true
       if length(var.dkim.pubkey) != 0 || substr(var.dkim.pubkey, 0, 8) != "v=DKIM1;"
     ]) == length(var.dkim)
@@ -59,6 +59,6 @@ variable "dkim" {
 
 variable "tags" {
   description = "Tags to set on the resource."
-  type = map(string)
-  default = {}
+  type        = map(string)
+  default     = {}
 }

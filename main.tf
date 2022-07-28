@@ -12,11 +12,11 @@ resource "digitalocean_domain" "default" {
 }
 
 resource "digitalocean_record" "google-verification" {
-  count    = length(var.txt)
-  domain   = digitalocean_domain.default.name
-  type     = "TXT"
-  name     = "@"
-  value    = var.txt[count.index]
+  count  = length(var.txt)
+  domain = digitalocean_domain.default.name
+  type   = "TXT"
+  name   = "@"
+  value  = var.txt[count.index]
 }
 
 resource "digitalocean_record" "spf" {
@@ -47,24 +47,24 @@ locals {
   gmail_mx_records = {
     "skip" = {}
     "default" = {
-      "aspmx.l.google.com."       = { "priority" = 1, "ttl" = 1800 },
-      "alt1.aspmx.l.google.com."  = { "priority" = 5, "ttl" = 1800 },
-      "alt2.aspmx.l.google.com."  = { "priority" = 5, "ttl" = 1800 },
-      "alt3.aspmx.l.google.com."  = { "priority" = 10, "ttl" = 1800 },
-      "alt4.aspmx.l.google.com."  = { "priority" = 10, "ttl" = 1800 },
+      "aspmx.l.google.com."      = { "priority" = 1, "ttl" = 1800 },
+      "alt1.aspmx.l.google.com." = { "priority" = 5, "ttl" = 1800 },
+      "alt2.aspmx.l.google.com." = { "priority" = 5, "ttl" = 1800 },
+      "alt3.aspmx.l.google.com." = { "priority" = 10, "ttl" = 1800 },
+      "alt4.aspmx.l.google.com." = { "priority" = 10, "ttl" = 1800 },
     }
   }
 }
 
 resource "digitalocean_record" "gmail_mx_map" {
-  for_each      = local.gmail_mx_records[var.gmail_mx ? "default" : "skip"]
+  for_each = local.gmail_mx_records[var.gmail_mx ? "default" : "skip"]
 
-  name               = "@"
-  type               = "MX"
-  domain             = digitalocean_domain.default.id
-  value              = each.key
-  priority           = each.value.priority
-  ttl                = each.value.ttl
+  name     = "@"
+  type     = "MX"
+  domain   = digitalocean_domain.default.id
+  value    = each.key
+  priority = each.value.priority
+  ttl      = each.value.ttl
 }
 
 resource "digitalocean_project_resources" "default" {
